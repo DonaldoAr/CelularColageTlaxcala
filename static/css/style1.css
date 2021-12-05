@@ -1,34 +1,35 @@
-body{
-    width: 1080px;
-    height: 1920px;
-    position: relative;
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+html {
+    background: #111111;
+    height: 100%;
+    background: linear-gradient( #333, #000);
+}
+.container{
+    display: flex;
+    justify-content: center;
 }
 
-.mensaje{
-    text-align: center;
-    margin-top: 5rem;
-    font-size: 7rem;
+.btn{
+    border: 1px solid white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    color: white;
+}
+
+#submit{
+    background: transparent;
 }
 
 form{
-    text-align: center;
-}
-
-.form-control{
-    /* width: 45rem;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    border: solid; */
-    height: 7.2rem;
-    width: 60rem;
-    font-size: 6rem;
-    margin-bottom: 1rem;
-    border: solid;
-}
-
-.btn-info{
-    width: 20rem;
-    height: 10rem;
-    font-size: 5rem;
-    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
