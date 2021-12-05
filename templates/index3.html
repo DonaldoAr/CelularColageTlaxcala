@@ -1,0 +1,63 @@
+<html>
+<head>
+    <title>Python Flask Upload and display image</title>
+    <link rel="stylesheet" href="css/style.css" />        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="mensaje">Tomar foto</h1>
+            <img src="res/cam.png" alt="" class="cam">
+            <!-- <p>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+            </p> -->
+            <!-- MUESTRA DE IMAGEN -->
+            <!-- {% if filename %}
+                <div>
+                    <img src="{{ url_for('display_image', filename=filename) }}">
+                </div>
+            {% endif %} -->
+            <form method="post" action="/" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                       <input id="icon" capture="camera" type="file" name="file" class="form-control" autocomplete="off" required value="foto">
+                    </p>
+                </dl>
+                <p>
+                    <input type="submit" value="ENVIAR" class="btn btn-info">
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // var websocket = new WebSocket("ws://localhost:3000");
+        var websocket = new WebSocket("ws://192.168.100.111:3000");
+        var submit = document.getElementById('submit');
+        var image = document.getElementById("file");
+        submit.addEventListener('click',function(event){
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append("file", image.files[0]);
+            var xhr = new XMLHttpRequest ();
+            xhr.open("POST","/",true);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    websocket.send("message");
+                }
+            }
+            xhr.send(formData);
+        });
+    </script>
+
+</body>
+</html>
