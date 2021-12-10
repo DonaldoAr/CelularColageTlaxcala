@@ -40,26 +40,3 @@
     </form>
 </div>
 </div>
-<!-- CODIGO DE SOCKET.IO -->
-<script>
-    // var websocket = new WebSocket("ws://localhost:3000");
-    var websocket = new WebSocket("ws://192.168.1.69:3000");
-    var submit = document.getElementById('submit');
-    var image = document.getElementById("file");
-    submit.addEventListener('click',function(event){
-        event.preventDefault();
-        var formData = new FormData();
-        formData.append("file", image.files[0]);
-        var xhr = new XMLHttpRequest ();
-        xhr.open("POST","/",true);
-        xhr.onreadystatechange = function () {
-            if(xhr.readyState == 4 && xhr.status == 200){
-                websocket.send("message");
-            }
-        }
-        xhr.send(formData);
-    });
-</script>
-
-</body>
-</html>

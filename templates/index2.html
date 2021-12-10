@@ -7,10 +7,15 @@
     <img id="image" src="/static/downloads/fin.jpg">
     <script>
         // var websocket = new WebSocket("ws://localhost:3000");
-        var websocket = new WebSocket("ws://192.168.1.69:3000");
+        var websocket = new WebSocket("ws://192.168.1.202:3000");
         var image = document.getElementById('image');
         websocket.onmessage = function (evt) {
-            location.reload();
+            console.log(evt);
+            var img = document.createElement('img');
+            img.src = "/static/uploads/"+evt.data+".jpg";
+            img.setAttribute('class','full');
+            document.body.appendChild(img);
+            setTimeout(function(){location.reload();},10000)
         };
     </script>
 </body>

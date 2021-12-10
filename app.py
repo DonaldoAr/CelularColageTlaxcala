@@ -2,14 +2,25 @@ from logging import debug
 from flask import Flask, request, jsonify, Response, render_template, redirect, flash, url_for
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from Otro import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+import asyncio
+import websockets
+# from Otro import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 import os
 #  FUNCION PARA COLAGE
 from colageImg import opacidadImagenes
 
 # CARPETA DONDE SE ALMACENAN LOS DATOS
 UPLOAD_FOLDER = 'static/uploads'
-contador = 0
+contador = 34
+
+async def hello():
+	try:
+		uri = "ws://192.168.1.202:3000"
+		async with websockets.connect(uri) as websocket:
+			await websocket.send(str(contador))
+	except:
+		pass
+
 # SERVER 
 app = Flask(__name__)
 CORS(app)
@@ -47,18 +58,18 @@ def create_user():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         contador += 1
-        file.filename = str(contador)+'.jpg';
+        file.filename = str(contador)+'.jpg'
         filename = secure_filename(file.filename)
         #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         #print('upload_image filename: ' + filename)
         flash('Se cargo satisfactoriamente la imagen')
-        
+        asyncio.run(hello())
         print("contador: "+str(contador))
         # RENOMBRAR ARCHIVO QUE SE ENCUENTRA YA EN UPLOADS Y MANDARLO A rel
         opacidadImagenes(PathImagOri, PathImagenesRe, PathImagenAgua, contador)
         return render_template('index.html')
-        # return render_template('index.html', filename=filename)
     else:
         flash('Solo se permite imagenes tipo: - png, jpg, jpeg, gif')
         return redirect(request.url)
